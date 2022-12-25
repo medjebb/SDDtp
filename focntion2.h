@@ -43,6 +43,8 @@ void Empiler_expression()
 	U_char_float instance1;
 	do{
 		reel=Caracters_To_float(&opperateur);
+		printf("le reel : %f\n",reel);
+		printf("l'opperateur ' : %c\n",opperateur);
 		instance1.opperande=reel;
 		Empiler_element_pile(pile,instance1);
 		instance1.opperateur=opperateur;
