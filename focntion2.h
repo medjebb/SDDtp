@@ -69,3 +69,24 @@ float eval(U_char_float oprd1 , U_char_float opr , U_char_float oprd2)
 	}	
 }
 
+/* opr1 -> dernier operateur
+   opr2 -> operateur lu */
+int priorite(char opr1,char op2)
+{
+	if((opr1 =='*') || (opr1 == '/'))
+	{
+		if((opr2 =='*') || (opr2 == '/'))return((int)0)
+		return((int)1)
+	}
+	
+	if((opr1 =='+') || (opr1 == '-'))
+	{
+		if((opr2 =='*') || (opr2 == '/'))return((int)0)
+		return((int)1)
+	}
+}
+
+
+
+
+
