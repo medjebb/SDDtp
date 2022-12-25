@@ -80,7 +80,6 @@ float eval(U_char_float oprd1 , U_char_float opr , U_char_float oprd2)
    opr2 -> operateur lu */
 int priorite(char op1,char op2)
 {
-
 	if((op1 =='*') || (op1 == '/'))
 	{
 		if((op2 =='*') || (op2 == '/'))return((int)0);
@@ -89,6 +88,8 @@ int priorite(char op1,char op2)
 	return((int)0);
 
 }
+
+
 
 float calculer_exp_math_pile()
 {
@@ -119,12 +120,21 @@ float calculer_exp_math_pile()
 		
 	}
 
-	
 	while(Pile_init)
 	{
+
 		//Si les deux opperateurs ont la meme priorite , on continu a lire
-		if(priorite(Pile_opr->champ_opp.opperateur,
-				Pile_init->champ_opp.opperateur) == 0)
+		if(!Pile_opr)
+		{
+			//l'empilement de l'operateur
+			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
+			Pile_init=Depiler_element_pile(Pile_init);
+			//l'empilement de l'operande
+			Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
+			Pile_init=Depiler_element_pile(Pile_init);	
+			continue;
+		}
+		if(priorite(Pile_opr->champ_opp.opperateur,Pile_init->champ_opp.opperateur) == 0)
 		{
 			//l'empilement de l'operateur
 			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
@@ -152,19 +162,7 @@ float calculer_exp_math_pile()
 			Pile_eval=Empiler_element_pile(Pile_eval,operande);
 			
 		}
-		printf("\n------------");
-			Noeud * tmp=Pile_init;
-				while(tmp)
-				{
-					printf("\n%f",tmp->champ_opp.opperande);
-					tmp=tmp->svt;
-					printf("\n%c",tmp->champ_opp.opperateur);
-					tmp=tmp->svt;
-				}
 	}
-	printf("\naffichage de la pile restante");
-	
-	printf("\nFin affichage de la pile restante");
 	
 	while(Pile_eval->svt)
 	{
