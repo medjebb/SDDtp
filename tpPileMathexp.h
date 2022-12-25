@@ -1,20 +1,24 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-float Caracters_To_float();
-
-int Est_numerique(char cara);
-
-int main(void)
+int est_operateur(char car)
 {
-	char opr
-	float val=Caracters_To_float(&opr);
-	printf("\nle chiffre : %+f",val);	
-	printf("\nl\'oprateur  : %c",opr);	
+	return((car == '+') || (car == '-') || (car == '*') || (car == '\\'));
+}
+
+int Est_numerique(char cara)
+{
+	//voir si comprit entre le code 0 et 9
+	if(((int)'0'<=(int)cara) && ((int)cara<= (int)'9')) 
+		return ((int)cara - (int)'0');
+	if((int)cara==(int)'-') return -1;
+	if((int)cara==(int)'+') return -2;
+
+	return (int)-3;	
 }
 
 
-float Caracters_To_float(char *)
+float Caracters_To_float(char *opr)
 {
 	float valeur1=0,valeur2=0,rang=.1;
 	int unite,signe=1;
@@ -44,7 +48,7 @@ float Caracters_To_float(char *)
 		//le cas ou le caractere n'est un caractere numerique
 		if(unite < 0)break;
 		
-		valeur1=valeur1*10+unite		
+		valeur1=valeur1*10+unite;
 	}	
 	
 	
@@ -81,18 +85,4 @@ float Caracters_To_float(char *)
 
 
 
-int est_operateur(char car)
-{
-	return((car == '+') || (car == '-') || (car == '*') || (car == '\\'));
-}
 
-int Est_numerique(char cara)
-{
-	//voir si comprit entre le code 0 et 9
-	if(((int)'0'<=(int)cara) && ((int)cara<= (int)'9')) 
-		return ((int)cara - (int)'0');
-	if((int)cara==(int)'-') return -1;
-	if((int)cara==(int)'+') return -2;
-
-	return (int)-3;	
-}
