@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stdio.h>
-#include <malloc.h>
 #include "focntion2.h"
 #include "tpPileMathexp.h"
 
