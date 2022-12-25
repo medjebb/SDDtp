@@ -33,7 +33,7 @@ Noeud *Empiler_element_pile(Noeud * pile,U_char_float element)
 	NE->svt=pile;
 	return (Noeud*)NE;	
 } 
-Noeud *Dempiler_element_pile(Noeud *pile)
+Noeud *Depiler_element_pile(Noeud *pile)
 {
 	Noeud *ptr;
 	ptr=pile;
@@ -90,77 +90,91 @@ int priorite(char op1,char op2)
 
 }
 
-
 float calculer_exp_math_pile()
 {
 	Noeud *Pile_init,*Pile_opr,*Pile_eval;
 	U_char_float operande;
-	int val;
+	float val;
 	
 	//l'appel de la fonction Empiler_expression
 	printf("entrer une expression : ");
 	Pile_init=Empiler_expression();
 	
 	//le cas ou on a qu'un seul operande
-	if(Pile_init->svt==NULL)return(Pile_init->champ_opp.opperande);
+	if(Pile_init->svt==NULL)
+		return (float)(Pile_init->champ_opp.opperande);
 	
 	for(int i=0;i<3;i++)
 	{
 		if(i==1)
 		{
 			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
-			Pile_init=Dempiler_element_pile(Pile_init);
-			continue;
+			Pile_init=Depiler_element_pile(Pile_init);			
 		}
-		Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
-		Pile_init=Dempiler_element_pile(Pile_init);
+		else
+		{
+			Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
+			Pile_init=Depiler_element_pile(Pile_init);
+		}
+		
 	}
 	
 	while(Pile_init)
 	{
-		if(priorite(Pile_opr->champ_opp.opperateur,Pile_init->champ_opp.opperateur) == 0)
+		//Si les deux opperateurs ont la meme priorite , on continu a lire
+		if(priorite(Pile_opr->champ_opp.opperateur,
+				Pile_init->champ_opp.opperateur) == 0)
 		{
 			//l'empilement de l'operateur
 			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
-			Pile_init=Dempiler_element_pile(Pile_init);
+			Pile_init=Depiler_element_pile(Pile_init);
 			//l'empilement de l'operande
 			Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
-			Pile_init=Dempiler_element_pile(Pile_init);
-			continue;
+			Pile_init=Depiler_element_pile(Pile_init);
+			
 		}
-		operande=Pile_eval->champ_opp;
-		//depiler le 1er operande
-		Pile_eval=Dempiler_element_pile(Pile_eval);
-		//l'appel de la fonction eval
-		val=eval(operande,Pile_opr->champ_opp,Pile_eval->champ_opp);
-		//depiler le 2eme operande
-		Pile_eval=Dempiler_element_pile(Pile_eval);
-		//depiler le operateur
-		Pile_opr=Dempiler_element_pile(Pile_opr);
-		
-		operande.opperande=val;
-		//empiler le resultat dans la pile d'evaluation
-		Pile_eval=Empiler_element_pile(Pile_eval,operande);
+		//Si non on evalu le contenu de la pile d'evaluation
+		else
+		{
+			operande=Pile_eval->champ_opp;
+			//depiler l'operande a la tete de pile
+			Pile_eval=Depiler_element_pile(Pile_eval);
+			//l'appel de la fonction eval
+			val=eval(operande,Pile_opr->champ_opp,Pile_eval->champ_opp);
+			//depiler le 2eme operande
+			Pile_eval=Depiler_element_pile(Pile_eval);
+			//depiler l'operateur
+			Pile_opr=Depiler_element_pile(Pile_opr);
+			
+			operande.opperande=val;
+			//empiler le resultat dans la pile d'evaluation
+			Pile_eval=Empiler_element_pile(Pile_eval,operande);
+		}
 	}
-	
-	while(Pile_eval->svt)
+	while(Pile_eval)
+	{
+		printf("\n%f",Pile_eval->champ_opp.opperande);
+		Pile_eval=Pile_eval->svt;
+	}
+	printf("\nEvaluation du reste\n");
+	/*while(Pile_eval->svt)
 	{
 		operande=Pile_eval->champ_opp;
 		//depiler le 1er operande
-		Pile_eval=Dempiler_element_pile(Pile_eval);
+		Pile_eval=Depiler_element_pile(Pile_eval);
 		//l'appel de la fonction eval
 		val=eval(operande,Pile_opr->champ_opp,Pile_eval->champ_opp);
 		//depiler le 2eme operande
-		Pile_eval=Dempiler_element_pile(Pile_eval);
-		//depiler le operateur
-		Pile_opr=Dempiler_element_pile(Pile_opr);
+		Pile_eval=Depiler_element_pile(Pile_eval);
+		//depiler l'operateur
+		Pile_opr=Depiler_element_pile(Pile_opr);
 		
 		operande.opperande=val;
 		//empiler le resultat dans la pile d'evaluation
 		Pile_eval=Empiler_element_pile(Pile_eval,operande);
-		
 	}
-	return((float)Pile_eval->champ_opp.opperande);
+	printf("hell16%f",Pile_eval->champ_opp.opperande);
+	return((float)Pile_eval->champ_opp.opperande);*/
 }
 
 
