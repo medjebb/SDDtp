@@ -92,7 +92,7 @@ int priorite(char op1,char op2)
 
 float calculer_exp_math_pile()
 {
-	Noeud *Pile_init,*Pile_opr,*Pile_eval;
+	Noeud *Pile_init=NULL,*Pile_opr=NULL,*Pile_eval=NULL;
 	U_char_float operande;
 	float val;
 	
@@ -151,13 +151,12 @@ float calculer_exp_math_pile()
 			Pile_eval=Empiler_element_pile(Pile_eval,operande);
 		}
 	}
-	while(Pile_eval)
+	/*while(Pile_eval)
 	{
 		printf("\n%f",Pile_eval->champ_opp.opperande);
 		Pile_eval=Pile_eval->svt;
-	}
-	printf("\nEvaluation du reste\n");
-	/*while(Pile_eval->svt)
+	}*/
+	while(Pile_eval->svt)
 	{
 		operande=Pile_eval->champ_opp;
 		//depiler le 1er operande
@@ -173,8 +172,8 @@ float calculer_exp_math_pile()
 		//empiler le resultat dans la pile d'evaluation
 		Pile_eval=Empiler_element_pile(Pile_eval,operande);
 	}
-	printf("hell16%f",Pile_eval->champ_opp.opperande);
-	return((float)Pile_eval->champ_opp.opperande);*/
+	
+	return((float)Pile_eval->champ_opp.opperande);
 }
 
 
