@@ -9,6 +9,6 @@ int main(void)
 	char opr;
 	float val=Caracters_To_float(&opr);
 	printf("\nle chiffre : %+f",val);	
-	printf("\nl\'oprateur  : %c",opr);	
+	printf("\nl\'oprateur  : %d",opr);	
 	
 }

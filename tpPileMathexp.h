@@ -28,7 +28,7 @@ float Caracters_To_float(char *opr)
 	//traitement de signe
 	cara=getchar();
 	unite=Est_numerique(cara);
-	switch (cara)
+	switch (unite)
 		{
 			//si le caractere est un -
 			case -1: signe=-1;break;
@@ -36,13 +36,13 @@ float Caracters_To_float(char *opr)
 			case -2:signe=1;break;
 			//si le caractere est quelque chose d'autre que le + et -
 			case -3:
-				printf("ERREUR : expression mathematique est mal ecrite"); 
+				printf("ERREUR 1 : expression mathematique est mal ecrite"); 
 				exit(0);
 			default:  valeur1=valeur1*10+unite;	
 		}
 	
 	//boucler sur la premiere partie du reel qui est avant le '.'
-	while( ( (cara=getchar()) != '.') || (cara != '\n')) 
+	while( ( (cara=getchar()) != '.') && (cara != '\n')) 
 	{
 		unite=Est_numerique(cara);
 		//le cas ou le caractere n'est un caractere numerique
@@ -70,14 +70,14 @@ float Caracters_To_float(char *opr)
 	{
 		if(!est_operateur(cara))
 		{
-			printf("ERREUR : expression mathematique est mal ecrite"); 
+			printf("ERREUR 2 : expression mathematique est mal ecrite"); 
 			exit(0);
 		}
 		*opr=cara;
 	}
 	
 	if(cara == '\n')*opr=cara;
-	
+
 	// retourner la somme des deux parties du float
 	return (float)(signe*(valeur1+valeur2));
 }
