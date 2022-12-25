@@ -7,12 +7,14 @@ int Est_numerique(char cara);
 
 int main(void)
 {
-	float val=Caracters_To_float();
+	char opr
+	float val=Caracters_To_float(&opr);
 	printf("\nle chiffre : %+f",val);	
+	printf("\nl\'oprateur  : %c",opr);	
 }
 
 
-float Caracters_To_float()
+float Caracters_To_float(char *)
 {
 	float valeur1=0,valeur2=0,rang=.1;
 	int unite,signe=1;
@@ -73,13 +75,16 @@ float Caracters_To_float()
 			valeur2+=unite*rang;
 			rang/=10;
 		}
-			
 	}
+	
 
 	if(cara == '\n')*opr=cara;
 	// retourner la somme des deux parties du float
 	return (float)(signe*(valeur1+valeur2));
 }
+
+
+
 
 int est_operateur(char car)
 {
