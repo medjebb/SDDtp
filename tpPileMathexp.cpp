@@ -2,47 +2,36 @@
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
-typedef struct nd
-{
-	float info;
-	struct nd *suivant;
-}cellule;
 
-
-cellule *creer_cellule(float val)
-{
-	cellule *NE;
-	NE=(cellule*)malloc(sizeof(cellule));
-	if(!NE)
-	{
-		printf("erreur d\'allocation");
-		exit(0);
-	}
-	NE->info=val;
-	NE->suivant=NULL;
-	return((cellule*)NE);
-}
-
-cellule *empiler(cellule *pile,float val)
-{	
-	cellule *NE;
-	NE=creer_cellule(val);
-	if(!pile)return((cellule*)NE);
-	NE->suivant=pile->suivant;
-	pile->suivant=NE;
-	return((cellule*)pile);
-}
 float Caracters_To_float(char *opr)
 {
+	
 	float valeur1=0,valeur2=0,rang=.1;
 	int unite;
 	char cara;
 	
 	
+	cara=getchar();
+	unite=Est_numerique(cara);
+	switch (cara)
+		{
+			case '+': 
+				signe=1;
+				break;
+			case '-':
+				signe=-1;
+				break;
+			case -11:
+				printf("Erreur de lecture"); 
+				exit(0);
+				break;
+			default:  valeur1=valeur1*10+unite;	
+		}
+		
+	
 	//boucler sur la premiere partie du reel 
 	//qui est avant le '.'
 	
-
 	while( ((cara=getchar()) != ((int)'.')) || (cara != ((int)'\n')) ) 
 	{
 		unite=Est_numerique(cara);
@@ -84,25 +73,6 @@ int est_operateur(char car)
 
 
 
-int ExperssionMath_pile(){
-	cellule *maPile,*NE;
-	float valeur;
-	char c,*opr;
-	cellule *ptr;
-	ptr=mapile;
-	
-	do
-	{
-		valeur=Caracters_To_float(opr);
-		maPile=empile(valeur);
-		
-		
-		
-	}while(opr);
-	
-
-	
-}
 
 
 
