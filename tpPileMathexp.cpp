@@ -58,7 +58,7 @@ float Caracters_To_float(char *opr)
 	return (float)(valeur1+valeur2);
 }
 
-
+//
 
 int Est_numerique(char cara)
 {
