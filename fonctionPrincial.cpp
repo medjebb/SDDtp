@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <malloc.h>
 #include "focntion2.h"
 #include "tpPileMathexp.h"
 
@@ -7,8 +9,9 @@
 int main(void)
 {
 	char opr;
-	float val=Caracters_To_float(&opr);
-	printf("\nle chiffre : %+f",val);	
-	printf("\nl\'oprateur  : %d",opr);	
+	//float val=Caracters_To_float(&opr);
+	//printf("\nle chiffre : %+f",val);	
+	//printf("\nl\'oprateur  : %d",opr);
+	Empiler_expression();	
 	
 }

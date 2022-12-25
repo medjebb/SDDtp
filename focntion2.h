@@ -49,11 +49,7 @@ void Empiler_expression()
 			Empiler_element_pile(pile,instance1);
 		
 		
-	}while(opperateur!='\n')
-	
-	
-	
-	
+	}while(opperateur!='\n');	
 	
 	
 }
