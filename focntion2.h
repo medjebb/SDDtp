@@ -73,18 +73,23 @@ float eval(U_char_float oprd1 , U_char_float opr , U_char_float oprd2)
    opr2 -> operateur lu */
 int priorite(char opr1,char op2)
 {
-	if(opr1 == opr2)return((int)1);
 	
 	if((opr1 =='*') || (opr1 == '/'))
 	{
 		if((opr2 =='*') || (opr2 == '/'))return((int)0)
 		return((int)1)
 	}
-	
-	if((opr1 =='+') || (opr1 == '-'))
+	return((int)0);
+
+}
+
+
+float calculer_exp_math_pile(Noeud *Pile_init)
+{
+	if(Pile_init->svt==NULL)return(Pile_init->champ_opp)
+	while(Pile_init)
 	{
-		if((opr2 =='*') || (opr2 == '/'))return((int)0)
-		return((int)1)
+		
 	}
 }
 
