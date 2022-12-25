@@ -99,7 +99,7 @@ float calculer_exp_math_pile()
 	//l'appel de la fonction Empiler_expression
 	printf("entrer une expression : ");
 	Pile_init=Empiler_expression();
-	
+
 	//le cas ou on a qu'un seul operande
 	if(Pile_init->svt==NULL)
 		return (float)(Pile_init->champ_opp.opperande);
@@ -118,6 +118,7 @@ float calculer_exp_math_pile()
 		}
 		
 	}
+
 	
 	while(Pile_init)
 	{
@@ -149,13 +150,22 @@ float calculer_exp_math_pile()
 			operande.opperande=val;
 			//empiler le resultat dans la pile d'evaluation
 			Pile_eval=Empiler_element_pile(Pile_eval,operande);
+			
 		}
+		printf("\n------------");
+			Noeud * tmp=Pile_init;
+				while(tmp)
+				{
+					printf("\n%f",tmp->champ_opp.opperande);
+					tmp=tmp->svt;
+					printf("\n%c",tmp->champ_opp.opperateur);
+					tmp=tmp->svt;
+				}
 	}
-	/*while(Pile_eval)
-	{
-		printf("\n%f",Pile_eval->champ_opp.opperande);
-		Pile_eval=Pile_eval->svt;
-	}*/
+	printf("\naffichage de la pile restante");
+	
+	printf("\nFin affichage de la pile restante");
+	
 	while(Pile_eval->svt)
 	{
 		operande=Pile_eval->champ_opp;
