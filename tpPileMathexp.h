@@ -1,7 +1,7 @@
 
 int est_operateur(char car)
 {
-	return((car == '+') || (car == '-') || (car == '*') || (car == '\\'));
+	return((car == '+') || (car == '-') || (car == '*') || (car == '/'));
 }
 
 int Est_numerique(char cara)
@@ -79,6 +79,12 @@ float Caracters_To_float(char *opr)
 	// retourner la somme des deux parties du float
 	return (float)(signe*(valeur1+valeur2));
 }
+
+
+
+
+
+
 
 
 
