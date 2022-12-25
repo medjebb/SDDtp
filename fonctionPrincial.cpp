@@ -11,7 +11,7 @@ int main(void)
 	op1.opperande=5;
 	op2.opperateur='/';
 	op3.opperande=2;
-	
+	 
 	
 	val=eval(op1,op2,op3);
 	printf("\nla valeur est : %f",val);
