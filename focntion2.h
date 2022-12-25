@@ -1,4 +1,5 @@
 #include "tpPileMathexp.h"
+#include "malloc.h"
 union U_char_float
 {
 	float opperande;

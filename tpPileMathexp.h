@@ -1,5 +1,4 @@
 
-
 int est_operateur(char car)
 {
 	return((car == '+') || (car == '-') || (car == '*') || (car == '\\'));
