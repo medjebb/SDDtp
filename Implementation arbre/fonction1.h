@@ -153,6 +153,7 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,char opperateur)
 	T.opperateur=opperateur;
 	NE=Creer_Noeud(T);
 	
+	//si la racine est de meme ou plus prioritaire que l'opperateur lu
 	if(priorite(arbre->champ_opp->opperateur,opperateur) == 0)
 	{
 		NE->fgche=arbre;
@@ -160,8 +161,10 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,char opperateur)
 		element_courant[1]=NE;
 		return((Noeud*)NE);
 	}
-	ptr=ptr_Svt=arbre;
-	while(priorite(ptr_Svt,opperateur) == 1)
+	ptr=arbre;
+	ptr_Svt=arbre->fdt;
+	
+	while(priorite(ptr_Svt->champ_opp->opperateur,opperateur) == 1)
 	{
 		ptr=ptr_Svt;
 		ptr_Svt=ptr_Svt->fdt;
