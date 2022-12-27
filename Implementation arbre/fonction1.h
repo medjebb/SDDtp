@@ -146,8 +146,38 @@ float Caracters_To_float(char *opr)
 }
 
 
-Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,float reel,char opperateur)
+Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,char opperateur)
 {
+	Noeud *ptr,*ptr_Svt,*NE;
+	union U_char_float T;
+	T.opperateur=opperateur;
+	NE=Creer_Noeud(T);
+	
+	if(priorite(arbre->champ_opp->opperateur,opperateur) == 0)
+	{
+		NE->fgche=arbre;
+		NE->fdt=NULL;
+		element_courant[1]=NE;
+		return((Noeud*)NE);
+	}
+	ptr=ptr_Svt=arbre;
+	while(priorite(ptr_Svt,opperateur) == 1)
+	{
+		ptr=ptr_Svt;
+		ptr_Svt=ptr_Svt->fdt;
+	}
+	ptr->fdt=NE;
+	NE->fgche=ptr_Svt;
+	element_courant[1]=NE;
+	return((Noeud*)arbre);
 	
 }
+
+
+
+
+
+
+
+
 
