@@ -11,7 +11,13 @@ typedef struct Nd
 	struct Nd* fdt;//pointeur sur le fils droit
 }Noeud;
 
-
+/********************************Creer_Noeud************************/
+/*
+	Entée: U_char_float val : la valeur a mettre dans le nouvel element
+	Sorties: le nouvel element alloué
+	la fonction prends la valeur et fait une allocation memoire, 
+	et initialise cette nouvel element avec val
+*/
 Noeud * Creer_Noeud(U_char_float val)
 {
 	Noeud *arb;
@@ -19,7 +25,7 @@ Noeud * Creer_Noeud(U_char_float val)
 	//allocation memoire du nouvel element
 	arb=(Noeud*)malloc(sizeof(Noeud));
 	
-	//Test si l'allocation est bien fait
+	//Test si l'allocation est bien faite
 	if(!arb)
 	{
 		printf("\nErreur d'allocation");
@@ -32,3 +38,5 @@ Noeud * Creer_Noeud(U_char_float val)
 	
 	return (Noeud*) arb;
 }
+
+/*******************************************************************/
