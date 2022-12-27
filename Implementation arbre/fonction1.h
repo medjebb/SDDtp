@@ -146,7 +146,7 @@ float Caracters_To_float(char *opr)
 }
 
 
-int rendre_ancetre(Noeud* arbre,float reel,char opperateur)
+Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,float reel,char opperateur)
 {
 	
 }
