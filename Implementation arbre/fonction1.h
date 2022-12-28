@@ -79,9 +79,32 @@ int afficher_Arb_horizontal(Noeud * arb,int niveau)
 	return (int)1;	
 }
 /*******************************************************************/
+int est_operateur(char car)
+{
+	return((car == '+') || (car == '-') || (car == '*') || (car == '/'));
+}
 
+int Est_numerique(char cara)
+{
+	//voir si comprit entre le code 0 et 9
+	if(((int)'0'<=(int)cara) && ((int)cara<= (int)'9')) 
+		return ((int)cara - (int)'0');
+	if((int)cara==(int)'-') return -1;
+	if((int)cara==(int)'+') return -2;
 
+	return (int)-3;	
+}
 
+int priorite(char op1,char op2)
+{
+	if((op1 =='+') || (op1 == '-'))
+	{
+		if((op2 =='-') || (op2 == '+'))return((int)0);
+		return((int)1);
+	}
+	return((int)0);
+
+}
 
 float Caracters_To_float(char *opr)
 {
@@ -158,47 +181,38 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1]
 	NE=Creer_Noeud(T);
 	
 	//si la racine est de meme ou plus prioritaire que l'opperateur lu
-	if(priorite(arbre->champ_opp->opperateur,opperateur) == 0)
+	if(priorite(arbre->champ_opp.opperateur,opperateur) == 0)
 	{
 		NE->fgche=arbre;
 		NE->fdt=NULL;
-		element_courant[1]=NE;
+		element_courant[0]=NE;
 		return((Noeud*)NE);
 	}
 	ptr=arbre;
 	ptr_Svt=arbre->fdt;
 	
-	while(priorite(ptr_Svt->champ_opp->opperateur,opperateur) == 1)
+	while(priorite(ptr_Svt->champ_opp.opperateur,opperateur) == 1)
 	{
 		ptr=ptr_Svt;
 		ptr_Svt=ptr_Svt->fdt;
 	}
 	ptr->fdt=NE;
 	NE->fgche=ptr_Svt;
-	element_courant[1]=NE;
+	element_courant[0]=NE;
 	return((Noeud*)arbre);
 	
 }
 
 /* op1 -> l'operateur qui se trouve dans le noeud courant
    op2 -> operateur lu */
-int priorite(char op1,char op2)
-{
-	if((op1 =='+') || (op1 == '-'))
-	{
-		if((op2 =='-') || (op2 == '+'))return((int)0);
-		return((int)1);
-	}
-	return((int)0);
 
-}
 
 Noeud* convertir_exp_math_arbre(void)
 {
 	int res;
 	char opperateur;
 	float opperande;
-	U_char_float elem_union;
+	union U_char_float elem_union;
 	Noeud * arbre=NULL,* NE,*element_courant[1];
 	
 	opperande=Caracters_To_float(&opperateur);
@@ -229,7 +243,7 @@ Noeud* convertir_exp_math_arbre(void)
 		}
 		else
 		{
-			res=priorite(element_courant[0],opperateur);			
+			res=priorite(element_courant[0]->champ_opp.opperateur,opperateur);			
 			
 			if(res==0)
 			{
@@ -252,8 +266,6 @@ Noeud* convertir_exp_math_arbre(void)
 			
 		}
 			
-		
-		
 	}
 	
 	return (Noeud*)arbre;
