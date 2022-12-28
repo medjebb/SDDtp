@@ -4,8 +4,8 @@
 
 union U_char_float
 {
-	float opperande;
-	char opperateur;
+	float opperande;// un variable de type float
+	char opperateur;// un variable de type char
 };
 
 typedef struct Nd
@@ -81,11 +81,31 @@ int afficher_Arb_horizontal(Noeud * arb,int niveau)
 	return (int)1;	
 }
 /*******************************************************************/
+
+
+
+/********************************est_operateur************************/
+/*
+	Entée:   char car : le caratere sur lequel on teste
+	Sorties: 1-> l'element passer ou paramettre est un operateur
+			 0-> sinon
+*/
 int est_operateur(char car)
 {
 	return((car == '+') || (car == '-') || (car == '*') || (car == '/'));
 }
 
+/*******************************************************************/
+
+
+
+
+/********************************Est_numerique************************/
+/*
+	Entée: char car : le caratere sur lequel on teste
+	Sorties: la valeur numerique si le caractare est un caractere numerique
+	sinon -1 ou -2 si le caractere est un operateur de signe(+,-) sinon -3
+*/
 int Est_numerique(char cara)
 {
 	//voir si comprit entre le code 0 et 9
@@ -96,18 +116,34 @@ int Est_numerique(char cara)
 
 	return (int)-3;	
 }
+/*******************************************************************/
 
+/********************************priorite************************/
+/*
+	Entée: char op1 : l'operateur qui se trouve dans le noeud courant
+		   char op2 : l'operateur lu 
+	Sorties: 
+*/
 int priorite(char op1,char op2)
 {
+	/* tester si l'operateur qui se trouve dans le noeud courant
+	 est un + ou un -*/
 	if((op1 =='+') || (op1 == '-'))
 	{
+		// tester si l'operateur lu est un + ou un -
 		if((op2 =='-') || (op2 == '+'))return((int)0);
 		return((int)1);
 	}
 	return((int)0);
 
 }
+/*******************************************************************/
 
+/********************************Caracters_To_float************************/
+/*
+	Entée: char *opr : un passage par adresse  dun variable de type char
+	Sorties: la valeur numerique saisie 
+*/
 float Caracters_To_float(char *opr)
 {
 	float valeur1=0,valeur2=0,rang=.1;
@@ -155,9 +191,10 @@ float Caracters_To_float(char *opr)
 		}
 	}
 	
-	
+	//tester si le reel se termine par un caractere
 	if(unite < 0)
 	{
+		// tester si ce caractere n'est pas un operateur
 		if(!est_operateur(cara))
 		{
 			printf("ERREUR 2 : expression mathematique est mal ecrite"); 
@@ -172,14 +209,24 @@ float Caracters_To_float(char *opr)
 	return (float)(signe*(valeur1+valeur2));
 }
 
+/*******************************************************************/
 
+/********************************rendre_ancetre************************/
+/*
+	Entée: Noeud* arbre :l'arbre ou on va se deplacer
+		   Noeud *element_courant[1] :le variable ou va stocker la nouvelle adresse 
+		   de noued courant
+		   char opperateur: l'operateur qu'on va inserer
+	Sorties: l'addrese de l'arbre
+*/
 Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] 
 								,char opperateur)
 {
 	Noeud *ptr,*ptr_Svt,*NE;
 	union U_char_float T;
-	
 	T.opperateur=opperateur;
+	
+	//creation d'un noued
 	NE=Creer_Noeud(T);
 	
 	//si la racine est de meme ou plus prioritaire que l'opperateur lu
@@ -190,26 +237,33 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1]
 		element_courant[0]=NE;
 		return((Noeud*)NE);
 	}
+	
 	ptr=arbre;
 	ptr_Svt=arbre->fdt;
-	
+	//boucler jusqu'a trouver le bon emplacemnt ou il faut inserer l'operateur
 	while(priorite(ptr_Svt->champ_opp.opperateur,opperateur) == 1)
 	{
 		ptr=ptr_Svt;
 		ptr_Svt=ptr_Svt->fdt;
 	}
+	
+	//inserer l'operateur a la bonne place
 	ptr->fdt=NE;
 	NE->fgche=ptr_Svt;
 	element_courant[0]=NE;
 	return((Noeud*)arbre);
 	
 }
-
-/* op1 -> l'operateur qui se trouve dans le noeud courant
-   op2 -> operateur lu */
+/*******************************************************************/
 
 
-Noeud* convertir_exp_math_arbre(void)
+/********************************convertir_exp_math_arbre************************/
+/*
+	Entée: char op1 : l'operateur qui se trouve dans le noeud courant
+		   char op2 : l'operateur lu 
+	Sorties: 
+*/
+Noeud* convertir_exp_math_arbre()
 {
 	int res;
 	char opperateur;
@@ -217,7 +271,9 @@ Noeud* convertir_exp_math_arbre(void)
 	union U_char_float elem_union;
 	Noeud * arbre=NULL,* NE,*element_courant[1];
 	
+	//l'appel de la fonction Caracters_To_float
 	opperande=Caracters_To_float(&opperateur);
+	// stocker le reel retourner
 	elem_union.opperande=opperande;
 	NE=Creer_Noeud(elem_union);
 	
@@ -225,42 +281,50 @@ Noeud* convertir_exp_math_arbre(void)
 	if(opperande=='\n')
 		return (Noeud*)NE;
 		
-	//Si non on met l'opperateur dans la racine et l'opperande comme fils
+	//Sinon on met l'opperateur dans la racine et l'opperande comme fils gauche
 	arbre=NE;	
 	elem_union.opperateur=opperateur;
 	NE=Creer_Noeud(elem_union);
 	NE->fgche=arbre;
 	arbre=NE;	
-	
 	element_courant[0]=arbre;
+	
 	//Traiter les elements qui restent
 	while(opperateur!='\n')
 	{
+		//l'appel de la fonction Caracters_To_float
 		opperande=Caracters_To_float(&opperateur);
+		//tester si operateur est un /n
 		if(opperateur=='\n')
 		{
+			//on met l'opperande comme fils droit
 			elem_union.opperande=opperande;
 			NE=Creer_Noeud(elem_union);
 			element_courant[0]->fdt=NE;
 		}
 		else
 		{
-			res=priorite(element_courant[0]->champ_opp.opperateur,opperateur);			
-			
+			//tester la priorite entre l'oprateur element_courant et l'operateur lu
+			res=priorite(element_courant[0]->champ_opp.opperateur,opperateur);
+						
+			//si element_courant est plus prioritaire
 			if(res==0)
 			{
+				//on met l'opperande comme fils droit
 				elem_union.opperande=opperande;
 				NE=Creer_Noeud(elem_union);
 				element_courant[0]->fdt=NE;
+				//l'appel de la fonction rendre_ancetre
 				arbre=rendre_ancetre(arbre,element_courant,opperateur);
 			}
 			else
 			{
+				// on met l'opperateur dans la element_courant et l'opperande comme son fils gauche
 				elem_union.opperateur=opperateur;
 				NE=Creer_Noeud(elem_union);
 				element_courant[0]->fdt=NE;
 				element_courant[0]=NE;
-				
+				//et l'opperande comme son fils gauche
 				elem_union.opperande=opperande;
 				NE=Creer_Noeud(elem_union);
 				element_courant[0]->fgche=NE;
@@ -272,7 +336,14 @@ Noeud* convertir_exp_math_arbre(void)
 	
 	return (Noeud*)arbre;
 }
+/*******************************************************************/
 
+
+/********************************Evaluation_Arb_arith************************/
+/*
+	Entée: char op1 :un arbre 
+	Sorties: la valeur calculer de l'experssion arthmerique
+*/
 float Evaluation_Arb_arith(Noeud *arbre)
 {
 	float opr1,opr2;
@@ -293,6 +364,7 @@ float Evaluation_Arb_arith(Noeud *arbre)
 		case '/':return((float)opr1/opr2) ;
 	}
 }
+/*******************************************************************/
 
 
 
