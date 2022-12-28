@@ -151,6 +151,7 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1]
 {
 	Noeud *ptr,*ptr_Svt,*NE;
 	union U_char_float T;
+	
 	T.opperateur=opperateur;
 	NE=Creer_Noeud(T);
 	
@@ -192,14 +193,15 @@ int priorite(char op1,char op2)
 
 Noeud* convertir_exp_math_arbre(void)
 {
+	int res;
 	char opperateur;
 	float opperande;
-	U_char_float elem;
-	Noeud * arbre=NULL,* NE,*element_courant;
+	U_char_float elem_union;
+	Noeud * arbre=NULL,* NE,*element_courant[1];
 	
 	opperande=Caracters_To_float(&opperateur);
-	elem.opperande=opperande;
-	NE=Creer_Noeud(elem);
+	elem_union.opperande=opperande;
+	NE=Creer_Noeud(elem_union);
 	
 	//Si l'expression est composé d'un seul chifre
 	if(opperande=='\n')
@@ -207,15 +209,47 @@ Noeud* convertir_exp_math_arbre(void)
 		
 	//Si non on met l'opperateur dans la racine et l'opperande comme fils
 	arbre=NE;	
-	elem.opperateur=opperateur;
-	NE=Creer_Noeud(elem);
+	elem_union.opperateur=opperateur;
+	NE=Creer_Noeud(elem_union);
 	NE->fgche=arbre;
 	arbre=NE;	
 	
+	element_courant[0]=arbre;
 	//Traiter les elements qui restent
 	while(opperateur!='\n')
 	{
 		opperande=Caracters_To_float(&opperateur);
+		if(opperateur=='\n')
+		{
+			elem_union.opperande=opperande;
+			NE=Creer_Noeud(elem_union);
+			element_courant[0]->fdt=NE;
+		}
+		else
+		{
+			res=priorite(element_courant[0],opperateur);			
+			
+			if(res==0)
+			{
+				elem_union.opperande=opperande;
+				NE=Creer_Noeud(elem_union);
+				element_courant[0]->fdt=NE;
+				arbre=rendre_ancetre(arbre,element_courant,opperateur);
+			}
+			else
+			{
+				elem_union.opperateur=opperateur;
+				NE=Creer_Noeud(elem_union);
+				element_courant[0]->fdt=NE;
+				element_courant[0]=NE;
+				
+				elem_union.opperande=opperande;
+				NE=Creer_Noeud(elem_union);
+				element_courant[0]->fgche=NE;
+			}
+			
+		}
+			
 		
 		
 	}
