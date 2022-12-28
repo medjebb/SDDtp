@@ -1,3 +1,5 @@
+#include<stdlib.h>
+#include<malloc.h>
 union U_char_float
 {
 	float opperande;
@@ -253,6 +255,8 @@ Noeud* convertir_exp_math_arbre(void)
 		
 		
 	}
+	
+	return (Noeud*)arbre;
 }
 
 
