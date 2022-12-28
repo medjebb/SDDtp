@@ -146,7 +146,8 @@ float Caracters_To_float(char *opr)
 }
 
 
-Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,char opperateur)
+Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] 
+								,char opperateur)
 {
 	Noeud *ptr,*ptr_Svt,*NE;
 	union U_char_float T;
@@ -176,8 +177,49 @@ Noeud* rendre_ancetre(Noeud* arbre,Noeud *element_courant[1] ,char opperateur)
 	
 }
 
+/* op1 -> l'operateur qui se trouve dans le noeud courant
+   op2 -> operateur lu */
+int priorite(char op1,char op2)
+{
+	if((op1 =='+') || (op1 == '-'))
+	{
+		if((op2 =='-') || (op2 == '+'))return((int)0);
+		return((int)1);
+	}
+	return((int)0);
 
+}
 
+Noeud* convertir_exp_math_arbre(void)
+{
+	char opperateur;
+	float opperande;
+	U_char_float elem;
+	Noeud * arbre=NULL,* NE,*element_courant;
+	
+	opperande=Caracters_To_float(&opperateur);
+	elem.opperande=opperande;
+	NE=Creer_Noeud(elem);
+	
+	//Si l'expression est composé d'un seul chifre
+	if(opperande=='\n')
+		return (Noeud*)NE;
+		
+	//Si non on met l'opperateur dans la racine et l'opperande comme fils
+	arbre=NE;	
+	elem.opperateur=opperateur;
+	NE=Creer_Noeud(elem);
+	NE->fgche=arbre;
+	arbre=NE;	
+	
+	//Traiter les elements qui restent
+	while(opperateur!='\n')
+	{
+		opperande=Caracters_To_float(&opperateur);
+		
+		
+	}
+}
 
 
 
