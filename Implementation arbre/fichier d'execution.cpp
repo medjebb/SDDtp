@@ -7,4 +7,6 @@ int main(void)
 	arbre=convertir_exp_math_arbre();
 	
 	afficher_Arb_horizontal(arbre,-1);
+	
+	printf("la valeur est egale a : %f",Evaluation_Arb_arith(arbre));
 }

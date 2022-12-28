@@ -105,25 +105,15 @@ float calculer_exp_math_pile()
 	if(Pile_init->svt==NULL)
 		return (float)(Pile_init->champ_opp.opperande);
 	
-	for(int i=0;i<3;i++)
-	{
-		if(i==1)
-		{
-			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
-			Pile_init=Depiler_element_pile(Pile_init);			
-		}
-		else
-		{
-			Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
-			Pile_init=Depiler_element_pile(Pile_init);
-		}
-		
-	}
+	//empiler le 1er operande dans la pile d'evaulation
+	Pile_eval=Empiler_element_pile(Pile_eval,Pile_init->champ_opp);
+	Pile_init=Depiler_element_pile(Pile_init);
+
 
 	while(Pile_init)
 	{
 
-		//Si les deux opperateurs ont la meme priorite , on continu a lire
+		//Si la pile d'operateur est vide , on continu a lire
 		if(!Pile_opr)
 		{
 			//l'empilement de l'operateur
@@ -134,7 +124,9 @@ float calculer_exp_math_pile()
 			Pile_init=Depiler_element_pile(Pile_init);	
 			continue;
 		}
-		if(priorite(Pile_opr->champ_opp.opperateur,Pile_init->champ_opp.opperateur) == 0)
+		//Si les deux opperateurs ont la meme priorite , on continu a lire
+		if(priorite(Pile_opr->champ_opp.opperateur,
+				Pile_init->champ_opp.opperateur) == 0)
 		{
 			//l'empilement de l'operateur
 			Pile_opr=Empiler_element_pile(Pile_opr,Pile_init->champ_opp);
@@ -164,6 +156,7 @@ float calculer_exp_math_pile()
 		}
 	}
 	
+	// le cas ou on a que des operateurs de meme priorite
 	while(Pile_eval->svt)
 	{
 		operande=Pile_eval->champ_opp;

@@ -273,6 +273,30 @@ Noeud* convertir_exp_math_arbre(void)
 	return (Noeud*)arbre;
 }
 
+float Evaluation_Arb_arith(Noeud *arbre)
+{
+	float opr1,opr2;
+	//tester si l'arbre est vide et retourner 0
+	if(!arbre)return((float)0);
+	// tester s'il est une feuille (operande)
+	if((!arbre->fdt) && (!arbre->fgche))return((float)arbre->champ_opp.opperande);
+	// evaluer le sous arbre gauche
+	opr1=Evaluation_Arb_arith(arbre->fgche);
+	// evaluer le sous arbre droit
+	opr2=Evaluation_Arb_arith(arbre->fdt);
+	
+	switch(arbre->champ_opp.opperateur)
+	{
+		case '+':return((float)opr1+opr2);
+		case '-':return((float)opr1-opr2) ;
+		case '*':return((float)opr1*opr2) ;
+		case '/':return((float)opr1/opr2) ;
+	}
+}
+
+
+
+
 
 
 
