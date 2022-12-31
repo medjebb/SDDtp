@@ -16,7 +16,7 @@ typedef struct Nd
 Nom Fonction : est_operateur
 Entree : un caractere 
 Sortie : entier
-Description : la focntion test si le caractere est 
+Description : la fonction test si le caractere est 
 	un opperateur mathematique
 */
 int est_operateur(char car)
