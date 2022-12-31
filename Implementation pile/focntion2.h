@@ -9,7 +9,7 @@ union U_char_float
 typedef struct Nd
 {
 	U_char_float champ_opp;//champ contenant l'information
-	struct Nd * svt; //Poi,teur sur le prochain noeud
+	struct Nd * svt; //Pointeur sur le prochain noeud
 }Noeud;//Nom de la structure
 
 /* 
