@@ -361,7 +361,12 @@ float Evaluation_Arb_arith(Noeud *arbre)
 		case '+':return((float)opr1+opr2);
 		case '-':return((float)opr1-opr2) ;
 		case '*':return((float)opr1*opr2) ;
-		case '/':return((float)opr1/opr2) ;
+		case '/':if( opr2 == 0)
+		{
+			printf("\n impossible de diviser %d sur 0  ",opr1);
+			exit(0);
+		}
+		return((float)opr1/opr2) ;
 	}
 }
 /*******************************************************************/
