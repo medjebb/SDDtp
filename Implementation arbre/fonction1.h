@@ -288,7 +288,9 @@ Noeud* convertir_exp_math_arbre()
 	NE->fgche=arbre;
 	arbre=NE;	
 	element_courant[0]=arbre;
-	
+	printf("\n __________________________________________\n\n");
+		afficher_Arb_horizontal(arbre,-1);
+	printf("\n __________________________________________\n");
 	//Traiter les elements qui restent
 	while(opperateur!='\n')
 	{
@@ -331,7 +333,9 @@ Noeud* convertir_exp_math_arbre()
 			}
 			
 		}
-			
+		printf("\n __________________________________________\n\n");
+		afficher_Arb_horizontal(arbre,-1);
+		printf("\n __________________________________________\n");
 	}
 	
 	return (Noeud*)arbre;
