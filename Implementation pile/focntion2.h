@@ -12,6 +12,30 @@ typedef struct Nd
 	struct Nd * svt; //Pointeur sur le prochain noeud
 }Noeud;//Nom de la structure
 
+void afficher_Pile(Noeud *tetePile)
+{
+	Noeud *pt_courant;
+	if(!tetePile)
+		printf("pile vide ");
+	else
+	{
+	printf("\n---------------------affichage pile ------------\n");	
+	pt_courant=tetePile;
+	
+	while(pt_courant)
+	{
+		printf("%f\n",pt_courant->champ_opp.opperande);
+		pt_courant=pt_courant->svt;
+		if(pt_courant->svt)
+			printf("%c\n",pt_courant->champ_opp.opperateur);
+		pt_courant=pt_courant->svt;
+	}
+	printf("\n-----------------FIN affichage pile ------------\n");
+	}
+		
+	
+}
+
 /* 
 Nom Fonction : est_operateur
 Entree : un caractere 
@@ -211,7 +235,6 @@ Noeud *Empiler_expression()
 		
 	//Refaire tant que l'opperateur lu n'est pas un '\n'
 	}while(opperateur!='\n');
-	
 	return((Noeud*)pile);
 }
 /*________________________FIN_Empiler_expression________________________*/
@@ -280,7 +303,8 @@ float calculer_exp_math_pile()
 	//l'appel de la fonction Empiler_expression
 	printf("entrer une expression : ");
 	Pile_init=Empiler_expression();
-
+	//printf("\nAffichage de la pile initial");
+	//afficher_Pile(Pile_init);
 	//le cas ou on a qu'un seul operande
 	if(Pile_init->svt==NULL)
 		return (float)(Pile_init->champ_opp.opperande);
